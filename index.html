@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Mi Persona Favorita</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primario: #ff758f;
+            --fondo: #0a0a0a;
+        }
+
+        body, html {
+            margin: 0; padding: 0;
+            width: 100%; height: 100%;
+            overflow: hidden;
+            background-color: var(--fondo);
+            font-family: 'Montserrat', sans-serif;
+            color: white;
+        }
+
+        #overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: radial-gradient(circle, #2c020a 0%, #000000 100%);
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            z-index: 1000;
+            transition: opacity 1s ease;
+        }
+
+        #btn-empezar {
+            padding: 20px 45px;
+            font-size: 1.8rem;
+            background: transparent;
+            color: white;
+            border: 2px solid var(--primario);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Dancing Script', cursive;
+        }
+
+        #btn-empezar:hover {
+            background: var(--primario);
+            box-shadow: 0 0 30px var(--primario);
+            transform: scale(1.1);
+        }
+
+        #contenido {
+            display: none;
+            width: 100%; height: 100vh;
+            position: relative;
+            overflow-y: auto;
+            background: linear-gradient(to bottom, #1a1a1a, #000);
+            padding-bottom: 200px;
+        }
+
+        /* Fotos Dispersas */
+        .foto-random {
+            position: absolute;
+            width: 220px;
+            height: auto;
+            border: 10px solid white;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.7);
+            border-radius: 2px;
+            z-index: 1;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            filter: sepia(20%);
+        }
+
+        .foto-random:hover {
+            transform: scale(1.2) rotate(0deg) !important;
+            z-index: 100;
+            filter: sepia(0%);
+            border-color: var(--primario);
+        }
+
+        .texto-central {
+            position: relative;
+            z-index: 10;
+            max-width: 600px;
+            margin: 150px auto;
+            background: rgba(0, 0, 0, 0.85);
+            padding: 50px;
+            border-radius: 30px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            color: var(--primario);
+            font-size: 3.5rem;
+            text-align: center;
+            margin-top: 0;
+        }
+
+        ol { list-style: none; padding: 0; }
+        li {
+            margin-bottom: 30px;
+            font-size: 1.3rem;
+            line-height: 1.6;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease;
+            text-align: center;
+        }
+
+        li.visible { opacity: 1; transform: translateY(0); }
+
+        /* Contenedor de Subtítulos Dobles */
+        #subtitulos-container {
+            position: fixed;
+            bottom: 40px;
+            width: 100%;
+            text-align: center;
+            z-index: 200;
+            pointer-events: none;
+        }
+
+        .sub-es {
+            display: block;
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2rem;
+            color: white;
+            text-shadow: 3px 3px 10px rgba(255, 117, 143, 0.8);
+            margin-bottom: 5px;
+        }
+
+        .sub-en {
+            display: block;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="overlay">
+        <h2 style="margin-bottom: 30px; font-weight: 300; letter-spacing: 3px;">PARA TI</h2>
+        <button id="btn-empezar">Presiona aquí</button>
+    </div>
+
+    <div id="contenido">
+        <img src="foto_1.jpg" class="foto-random" style="top: 5%; left: 10%; transform: rotate(-10deg);">
+        <img src="foto_2.jpg" class="foto-random" style="top: 15%; left: 70%; transform: rotate(15deg);">
+        <img src="foto_3.jpg" class="foto-random" style="top: 40%; left: 80%; transform: rotate(-5deg);">
+        <img src="foto_4.jpg" class="foto-random" style="top: 70%; left: 5%; transform: rotate(12deg);">
+        <img src="foto_5.jpg" class="foto-random" style="top: 85%; left: 40%; transform: rotate(-8deg);">
+        <img src="foto_6.jpg" class="foto-random" style="top: 50%; left: 15%; transform: rotate(-15deg);">
+        <img src="foto_7.jpg" class="foto-random" style="top: 5%; left: 45%; transform: rotate(5deg);">
+        <img src="foto_8.jpg" class="foto-random" style="top: 30%; left: 60%; transform: rotate(-20deg);">
+        <img src="foto_9.jpg" class="foto-random" style="top: 65%; left: 75%; transform: rotate(10deg);">
+        <img src="foto_10.jpg" class="foto-random" style="top: 80%; left: 15%; transform: rotate(5deg);">
+
+        <div class="texto-central">
+            <h1>Mis razones...</h1>
+            <ol id="lista-razones">
+                <li>Por cómo iluminas todo a tu alrededor.</li>
+                <li>Por esa paz que solo tú me transmites.</li>
+                <li>Por ser mi refugio y mi mejor aventura.</li>
+                <li>Por tu risa, que es mi sonido favorito.</li>
+                <li>Por la forma en que crees en mí.</li>
+                <li>Por cada pequeño detalle que compartimos.</li>
+                <li>Por tu inteligencia y tu gran corazón.</li>
+                <li>Por hacerme sentir que todo es posible.</li>
+                <li>Por la magia que hay en tus ojos.</li>
+                <li>Porque simplemente, eres el amor de mi vida.</li>
+            </ol>
+        </div>
+    </div>
+
+    <div id="subtitulos-container">
+        <span id="es" class="sub-es"></span>
+        <span id="en" class="sub-en"></span>
+    </div>
+
+    <video id="musica" style="display:none;">
+        <source src="musica_2.mp3" type="audio/mpeg">
+        <track id="track" kind="subtitles" src="letra_2.vtt" srclang="es" default>
+    </video>
+
+    <script>
+        const btn = document.getElementById('btn-empezar');
+        const overlay = document.getElementById('overlay');
+        const contenido = document.getElementById('contenido');
+        const musica = document.getElementById('musica');
+        const subEs = document.getElementById('es');
+        const subEn = document.getElementById('en');
+        const trackElement = document.getElementById('track');
+
+        btn.addEventListener('click', () => {
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                contenido.style.display = 'block';
+                musica.play();
+                
+                const items = document.querySelectorAll('li');
+                items.forEach((item, index) => {
+                    setTimeout(() => item.classList.add('visible'), 800 * index);
+                });
+            }, 1000);
+        });
+
+        // Lógica para separar y mostrar los subtítulos
+        trackElement.addEventListener('load', function() {
+            const track = this.track;
+            track.mode = 'hidden';
+
+            musica.ontimeupdate = () => {
+                const activeCues = track.activeCues;
+                if (activeCues && activeCues.length > 0) {
+                    const textoCompleto = activeCues[0].text;
+                    const partes = textoCompleto.split(' - ');
+                    subEs.innerText = partes[0] || "";
+                    subEn.innerText = partes[1] || "";
+                } else {
+                    subEs.innerText = "";
+                    subEn.innerText = "";
+                }
+            };
+        });
+    </script>
+</body>
+</html>
