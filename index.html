@@ -217,7 +217,7 @@
             }, 1000);
         });
 
-        // Sincronización de subtítulos
+        // Sincronización de subtítulos corregida
         const vttTrack = trackElement.track;
         vttTrack.mode = 'hidden';
 
@@ -225,14 +225,15 @@
             const activeCues = vttTrack.activeCues;
             
             if (activeCues && activeCues.length > 0) {
-                const text = activeCues[0].text;
-                // Dividimos el texto usando el separador " - "
+                // Esta línea es la clave: limpia saltos de línea y espacios extras
+                const text = activeCues[0].text.replace(/\n/g, ' '); 
                 const partes = text.split(' - ');
                 
                 if (partes.length >= 2) {
                     subEs.innerText = partes[0].trim();
                     subEn.innerText = partes[1].trim();
                 } else {
+                    // Si por algo no encuentra el guion, muestra el texto en español por defecto
                     subEs.innerText = text;
                     subEn.innerText = "";
                 }
