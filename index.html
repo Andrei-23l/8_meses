@@ -20,6 +20,7 @@
             color: white;
         }
 
+        /* Pantalla de Inicio */
         #overlay {
             position: fixed;
             top: 0; left: 0;
@@ -49,13 +50,14 @@
             transform: scale(1.1);
         }
 
+        /* Contenido Principal */
         #contenido {
             display: none;
             width: 100%; height: 100vh;
             position: relative;
             overflow-y: auto;
             background: linear-gradient(to bottom, #1a1a1a, #000);
-            padding-bottom: 200px;
+            padding-bottom: 250px; /* Espacio para que el scroll no tape los subs */
         }
 
         /* Fotos Dispersas */
@@ -118,7 +120,9 @@
             width: 100%;
             text-align: center;
             z-index: 200;
-            pointer-events: none;
+            pointer-events: none; /* No estorba al hacer clic */
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            padding: 20px 0;
         }
 
         .sub-es {
@@ -126,16 +130,18 @@
             font-family: 'Dancing Script', cursive;
             font-size: 2.2rem;
             color: white;
-            text-shadow: 3px 3px 10px rgba(255, 117, 143, 0.8);
+            text-shadow: 2px 2px 8px rgba(255, 117, 143, 1);
             margin-bottom: 5px;
+            padding: 0 20px;
         }
 
         .sub-en {
             display: block;
-            font-size: 1rem;
+            font-size: 0.95rem;
             color: rgba(255, 255, 255, 0.6);
             text-transform: uppercase;
             letter-spacing: 2px;
+            padding: 0 20px;
         }
     </style>
 </head>
@@ -199,8 +205,11 @@
             setTimeout(() => {
                 overlay.style.display = 'none';
                 contenido.style.display = 'block';
-                musica.play();
                 
+                // Iniciar música
+                musica.play().catch(error => console.log("Error reproducción:", error));
+                
+                // Aparecer razones gradualmente
                 const items = document.querySelectorAll('li');
                 items.forEach((item, index) => {
                     setTimeout(() => item.classList.add('visible'), 800 * index);
@@ -208,23 +217,29 @@
             }, 1000);
         });
 
-        // Lógica para separar y mostrar los subtítulos
-        trackElement.addEventListener('load', function() {
-            const track = this.track;
-            track.mode = 'hidden';
+        // Sincronización de subtítulos
+        const vttTrack = trackElement.track;
+        vttTrack.mode = 'hidden';
 
-            musica.ontimeupdate = () => {
-                const activeCues = track.activeCues;
-                if (activeCues && activeCues.length > 0) {
-                    const textoCompleto = activeCues[0].text;
-                    const partes = textoCompleto.split(' - ');
-                    subEs.innerText = partes[0] || "";
-                    subEn.innerText = partes[1] || "";
+        musica.addEventListener('timeupdate', () => {
+            const activeCues = vttTrack.activeCues;
+            
+            if (activeCues && activeCues.length > 0) {
+                const text = activeCues[0].text;
+                // Dividimos el texto usando el separador " - "
+                const partes = text.split(' - ');
+                
+                if (partes.length >= 2) {
+                    subEs.innerText = partes[0].trim();
+                    subEn.innerText = partes[1].trim();
                 } else {
-                    subEs.innerText = "";
+                    subEs.innerText = text;
                     subEn.innerText = "";
                 }
-            };
+            } else {
+                subEs.innerText = "";
+                subEn.innerText = "";
+            }
         });
     </script>
 </body>
