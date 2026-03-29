@@ -57,10 +57,9 @@
             position: relative;
             overflow-y: auto;
             background: linear-gradient(to bottom, #1a1a1a, #000);
-            padding-bottom: 250px; /* Espacio para que el scroll no tape los subs */
+            padding-bottom: 250px; 
         }
 
-        /* Fotos Dispersas */
         .foto-random {
             position: absolute;
             width: 220px;
@@ -120,7 +119,7 @@
             width: 100%;
             text-align: center;
             z-index: 200;
-            pointer-events: none; /* No estorba al hacer clic */
+            pointer-events: none; 
             background: linear-gradient(transparent, rgba(0,0,0,0.7));
             padding: 20px 0;
         }
@@ -208,10 +207,10 @@
                 overlay.style.display = 'none';
                 contenido.style.display = 'block';
                 
-                // Iniciar música
+                
                 musica.play().catch(error => console.log("Error reproducción:", error));
                 
-                // Aparecer razones gradualmente
+               
                 const items = document.querySelectorAll('li');
                 items.forEach((item, index) => {
                     setTimeout(() => item.classList.add('visible'), 800 * index);
@@ -219,7 +218,7 @@
             }, 1000);
         });
 
-        // Sincronización de subtítulos corregida
+        
         const vttTrack = trackElement.track;
         vttTrack.mode = 'hidden';
 
@@ -227,7 +226,7 @@
             const activeCues = vttTrack.activeCues;
             
             if (activeCues && activeCues.length > 0) {
-                // Esta línea es la clave: limpia saltos de línea y espacios extras
+                
                 const text = activeCues[0].text.replace(/\n/g, ' '); 
                 const partes = text.split(' - ');
                 
@@ -235,7 +234,7 @@
                     subEs.innerText = partes[0].trim();
                     subEn.innerText = partes[1].trim();
                 } else {
-                    // Si por algo no encuentra el guion, muestra el texto en español por defecto
+                   
                     subEs.innerText = text;
                     subEn.innerText = "";
                 }
